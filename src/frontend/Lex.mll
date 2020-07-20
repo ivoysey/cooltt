@@ -41,6 +41,8 @@ let keywords =
     ("→", RIGHT_ARROW);
     ("𝕀", DIM);
     ("dim", DIM);
+    ("𝟚", DDIM);
+    ("ddim", DDIM);
     ("𝔽", COF);
     ("cof", COF);
     ("∂", BOUNDARY);

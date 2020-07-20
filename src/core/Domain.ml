@@ -192,6 +192,8 @@ and pp_tp fmt =
     Format.fprintf fmt "<cof>"
   | TpDim ->
     Format.fprintf fmt "<dim>"
+  | TpDDim ->
+    Format.fprintf fmt "<ddim>"
   | Univ ->
     Format.fprintf fmt "<univ>"
   | Nat ->

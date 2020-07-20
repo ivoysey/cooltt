@@ -26,6 +26,13 @@ module Dim : sig
   val literal : int -> Chk.tac
 end
 
+module DDim : sig
+  val formation : Tp.tac
+  val dim0 : Chk.tac
+  val dim1 : Chk.tac
+  val literal : int -> Chk.tac
+end
+
 module Cof : sig
   val formation : Tp.tac
   val eq : Chk.tac -> Chk.tac -> Chk.tac

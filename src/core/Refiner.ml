@@ -187,6 +187,37 @@ struct
       RM.refine_err @@ Err.ExpectedDimensionLiteral n
 end
 
+module DDim =
+struct
+  let formation : T.Tp.tac =
+    T.Tp.virtual_rule @@
+    RM.ret S.TpDDim
+
+  let dim0 : T.Chk.tac =
+    T.Chk.rule @@
+    function
+    | D.TpDDim ->
+      RM.ret S.DDim0
+    | tp ->
+      RM.expected_connective `Dim tp (* todo wrong *)
+
+  let dim1 : T.Chk.tac =
+    T.Chk.rule @@
+    function
+    | D.TpDDim ->
+      RM.ret S.DDim1
+    | tp ->
+      RM.expected_connective `Dim tp (* todo wrong *)
+
+  let literal : int -> T.Chk.tac =
+    function
+    | 0 -> dim0
+    | 1 -> dim1
+    | n ->
+      T.Chk.rule @@ fun _ ->
+      RM.refine_err @@ Err.ExpectedDimensionLiteral n
+end
+
 module Cof =
 struct
   let formation : T.Tp.tac =

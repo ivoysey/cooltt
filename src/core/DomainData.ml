@@ -4,6 +4,7 @@ open Cubical
 open Bwd
 
 type dim = Dim.dim
+(* type ddim = DDim.ddim *) (* todo *)
 type cof = (dim, int) Cof.cof
 
 (** A type code whose head constructor is stable under dimension substitution. *)
@@ -43,6 +44,10 @@ and 'a clo = Clo of 'a * env
 and tp_clo = S.tp clo
 and tm_clo = S.t clo
 
+(* iev/note: for now, dims below aren't going to become ddims, nor will the
+   constructors become some how polymorphic in directedness, nor will all
+   of them one day. it's complicated. *)
+
 (** Value constructors are governed by {!type:con}; we do not maintain in the datatype {i a priori} any invariant that these represent whnfs (weak head normal forms). Whether a value constructor is a whnf is contingent on the ambient local state, such as the cofibration theory. *)
 and con =
   | Lam of Ident.t * tm_clo
@@ -51,7 +56,7 @@ and con =
   (** A nominal binder of a dimension; these are used during the execution of coercion, which must probe a line of type codes with a fresh dimension. *)
 
   | LetSym of dim * Symbol.t * con
-  (** An explicit substitution of a dimension for a symbol. *)
+  (** An explicit substitution of a dimension for a symbol. *) (* todo: ask jon about this and the symbols for dim *)
 
   | Cut of {tp : tp; cut : cut}
   (** Our notion of {i neutral} value, a type annotated {!type:cut}. *)
@@ -93,6 +98,7 @@ and tp =
   | ElUnstable of con unstable_code
   | GoalTp of string option * tp
   | TpDim
+  | TpDDim
   | TpCof
   | TpPrf of cof
   | TpSplit of (cof * tp_clo) list

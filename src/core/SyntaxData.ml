@@ -34,6 +34,8 @@ type t =
 
   | Dim0
   | Dim1
+  | DDim0
+  | DDim1
   | Cof of (t, t) Cof.cof_f
   | ForallCof of t
   | CofSplit of (t * t) list
@@ -65,6 +67,7 @@ and tp =
   | TpVar of int
   | GoalTp of string option * tp
   | TpDim
+  | TpDDim
   | TpCof
   | TpPrf of t
   | TpCofSplit of (t * tp) list
@@ -91,4 +94,3 @@ and sub =
 
   | SbP
   (** The projection from a extended context [Γ.A → Γ]. *)
-

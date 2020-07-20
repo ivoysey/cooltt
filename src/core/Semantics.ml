@@ -321,7 +321,7 @@ and subst_tp : D.dim -> Symbol.t -> D.tp -> D.tp CM.m =
     and+ phi = subst_cof r x phi
     and+ clo = subst_clo r x clo in
     D.Sub (base, phi, clo)
-  | D.Univ | D.Nat | D.Circle | D.TpDim | D.TpCof as con -> ret con
+  | D.Univ | D.Nat | D.Circle | D.TpDim | D.TpDDim | D.TpCof as con -> ret con
   | D.TpPrf phi ->
     let+ phi = subst_cof r x phi in
     D.TpPrf phi
@@ -477,6 +477,8 @@ and eval_tp : S.tp -> D.tp EvM.m =
     D.Sub (tp, phi, D.Clo (tm, env))
   | S.TpDim  ->
     ret D.TpDim
+  | S.TpDDim  ->
+    ret D.TpDDim
   | S.TpCof ->
     ret D.TpCof
   | S.TpPrf tphi ->
@@ -612,6 +614,8 @@ and eval : S.t -> D.con EvM.m =
       D.ElIn con
     | S.Dim0 -> ret D.Dim0
     | S.Dim1 -> ret D.Dim1
+    | S.DDim0 -> raise Todo
+    | S.DDim1 -> raise Todo
     | S.Cof cof_f ->
       begin
         match cof_f with
@@ -1652,4 +1656,3 @@ and splice_tm t =
 and splice_tp t =
   let env, tp = Splice.compile t in
   CM.lift_ev env @@ eval_tp tp
-
